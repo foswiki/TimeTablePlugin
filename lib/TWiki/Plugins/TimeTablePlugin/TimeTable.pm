@@ -1,10 +1,8 @@
 # Plugin for Foswiki - The Free and Open Source Wiki, http://foswiki.org/
 #
 # Copyright (C) 2000-2003 Andrea Sterbini, a.sterbini@flashnet.it
-# Copyright (C) 2001-2006 Peter Thoeny, peter@thoeny.org
-# and TWiki Contributors. All Rights Reserved. TWiki Contributors
-# are listed in the AUTHORS file in the root of this distribution.
-# NOTE: Please extend that file, not this notice.
+# Copyright (C) 2001-2004 Peter Thoeny, peter@thoeny.com
+# Copyright (C) 2006-2008 Daniel Rohde
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -108,7 +106,7 @@ sub inflate {
 	$fgcolor='' unless defined $fgcolor;
 	$bgcolor='' unless defined $bgcolor;
 
-	return $cgi->span(
+	return $options{hidettcm}?"": $cgi->span(
 			{
 				-style=>(($fgcolor ne '')?"color:$fgcolor;":'').(($bgcolor ne '')?"background-color:$bgcolor":''),
 				-title=>$title
@@ -166,7 +164,7 @@ sub _initDefaults {
 		weekendfgcolor => 'black',	#
 		tablebgcolor => 'white',	# table background color
 		timeformat => '24', 		# timeformat 12 or 24
-		unknownparamsmsg => '%RED% Sorry, some parameters are unknown: %UNKNOWNPARAMSLIST% %ENDCOLOR% <br/> Allowed parameters are (see %SYSTEMWEB%.'.$pluginName.' topic for more details): %KNOWNPARAMSLIST%',
+		unknownparamsmsg => '%RED% Sorry, some parameters are unknown: %UNKNOWNPARAMSLIST% %ENDCOLOR% <br/> Allowed parameters are (see TWiki.'.$pluginName.' topic for more details): %KNOWNPARAMSLIST%',
 		displaytime => 0,		# display time in description
 		workingstarttime => '9:00',	# 
 		workingendtime => '17:00',
@@ -211,10 +209,11 @@ sub _initDefaults {
 		tablecellspacing => 1,
 		textwrapper => 'browser',
 		rotatetable => 0,
+		hidettcm => 0,
 	);
 
 	@renderedOptions = ('tablecaption', 'name' , 'navprev', 'navnext', 'wholetimerowtext');
-	@flagOptions = ('compatmode','showweekend','displaytime','forcestartdate','wholetimerow','showmonthheader','clicktooltip','rotatetable');
+	@flagOptions = ('compatmode','showweekend','displaytime','forcestartdate','wholetimerow','showmonthheader','clicktooltip','rotatetable','hidettcm');
 
 
         %months = ( Jan=>1, Feb=>2, Mar=>3, Apr=>4, May=>5, Jun=>6, 
@@ -1457,7 +1456,7 @@ sub _processTopicSetup {
 	return $_[0];
 }
 
-### dro: following code is derived from Foswiki:Extensions.CalendarPlugin:
+### dro: following code is derived from TWiki:Plugins.CalendarPlugin:
 # =========================
 sub _getTopicText() {
 

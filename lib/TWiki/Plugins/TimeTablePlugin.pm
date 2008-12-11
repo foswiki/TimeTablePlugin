@@ -1,10 +1,8 @@
 # Plugin for Foswiki - The Free and Open Source Wiki, http://foswiki.org/
 #
 # Copyright (C) 2000-2003 Andrea Sterbini, a.sterbini@flashnet.it
-# Copyright (C) 2001-2006 Peter Thoeny, peter@thoeny.org
-# and TWiki Contributors. All Rights Reserved. TWiki Contributors
-# are listed in the AUTHORS file in the root of this distribution.
-# NOTE: Please extend that file, not this notice.
+# Copyright (C) 2001-2004 Peter Thoeny, peter@thoeny.com
+# Copyright (C) 2006-2008 Daniel Rohde
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -38,7 +36,8 @@ $VERSION = '$Rev: 8670$';
 # of the version number in PLUGINDESCRIPTIONS.
 $RELEASE = 'Dakar';
  
-$REVISION = '1.016'; #dro# added overflow:auto style; fixed unknownparamsmsg bug;
+$REVISION = '1.017'; #dro# added hidettcm attribute requested by TWiki:Main.StevenCorfman
+#$REVISION = '1.016'; #dro# added overflow:auto style; fixed unknownparamsmsg bug;
 #$REVISION = '1.015'; #dro# fixed rotated table bugs (tooltips, showweekend="off")
 #$REVISION = '1.014'; #dro# added documentation requested by TWiki:Main.PeterThoeny; added rotated table feature requested by TWiki:Main.VickiBrown; fixed doc bug reported by TWiki:Main.JoeGainey 
 #$REVISION = '1.013'; #dro# fixed major time parsing bug reported by TWiki:Main.LarsEik; fixed major bug: events with a time range before start time should not be displayed; fixed major TTCM bug reported by TWiki:Main.ArthurClemens; added URL parameter feature; added new attributes (tableborder, tablewidth, tablecell...); added browser based text wrapping feature requested by TWiki:Main.ArthurClemens
@@ -238,7 +237,7 @@ sub commonTagsHandler {
     eval {
 	    require TWiki::Plugins::TimeTablePlugin::TimeTable;
              
-	    $_[0] =~ s/<\/head>/<script src="%PUBURL%\/%SYSTEMWEB%\/$pluginName\/timetabletooltips.js" language="javascript" type="text\/javascript"><\/script><\/head>/is unless ($_[0]=~/timetabletooltips.js/);
+	    $_[0] =~ s/<\/head>/<script src="%PUBURL%\/%TWIKIWEB%\/$pluginName\/timetabletooltips.js" language="javascript" type="text\/javascript"><\/script><\/head>/is unless ($_[0]=~/timetabletooltips.js/);
 	    $_[0] =~ s/%TIMETABLE%/&TWiki::Plugins::TimeTablePlugin::TimeTable::expand("",$_[0],$_[1],$_[2])/ge;
 	    $_[0] =~ s/%TIMETABLE{(.*?)}%/&TWiki::Plugins::TimeTablePlugin::TimeTable::expand($1, $_[0], $_[1], $_[2])/ge;
 	    $_[0] =~ s/%TTCM{(.*?)}%/&TWiki::Plugins::TimeTablePlugin::TimeTable::inflate($1, $_[0],$_[1],$_[2])/ge;
@@ -620,7 +619,7 @@ This is an example of a sub to be called by the =rest= script. The parameter is:
 
 Additional parameters can be recovered via de query object in the $session.
 
-For more information, check %SYSTEMWEB%.CommandAndCGIScripts#rest
+For more information, check TWiki:TWiki.TWikiScripts#rest
 
 =cut
 
