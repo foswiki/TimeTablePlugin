@@ -14,19 +14,19 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 #
-# For licensing info read LICENSE file in the TWiki root.
+# For licensing info read LICENSE file in the Foswiki root.
 
 # change the package name and $pluginName!!!
-package TWiki::Plugins::TimeTablePlugin;
+package Foswiki::Plugins::TimeTablePlugin;
 
 # Always use strict to enforce variable scoping
 use strict;
 
-# $VERSION is referred to by TWiki, and is the only global variable that
+# $VERSION is referred to by Foswiki, and is the only global variable that
 # *must* exist in this package
 use vars qw( $VERSION $RELEASE $debug $pluginName $REVISION );
 
-# This should always be $Rev: 8670$ so that TWiki can determine the checked-in
+# This should always be $Rev: 8670$ so that Foswiki can determine the checked-in
 # status of the plugin. It is used by the build automation tools, so
 # you should leave it alone.
 $VERSION = '$Rev: 8670$';
@@ -40,7 +40,7 @@ $REVISION = '1.017'; #dro# added hidettcm attribute requested by TWiki:Main.Stev
 #$REVISION = '1.016'; #dro# added overflow:auto style; fixed unknownparamsmsg bug;
 #$REVISION = '1.015'; #dro# fixed rotated table bugs (tooltips, showweekend="off")
 #$REVISION = '1.014'; #dro# added documentation requested by TWiki:Main.PeterThoeny; added rotated table feature requested by TWiki:Main.VickiBrown; fixed doc bug reported by TWiki:Main.JoeGainey 
-#$REVISION = '1.013'; #dro# fixed major time parsing bug reported by TWiki:Main.LarsEik; fixed major bug: events with a time range before start time should not be displayed; fixed major TTCM bug reported by TWiki:Main.ArthurClemens; added URL parameter feature; added new attributes (tableborder, tablewidth, tablecell...); added browser based text wrapping feature requested by TWiki:Main.ArthurClemens
+#$REVISION = '1.013'; #dro# fixed major time parsing bug reported by TWiki:Main.LarsEik; fixed major bug: events with a time range before start time should not be displayed; fixed major TTCM bug reported by Foswiki:Main.ArthurClemens; added URL parameter feature; added new attributes (tableborder, tablewidth, tablecell...); added browser based text wrapping feature requested by Foswiki:Main.ArthurClemens
 #$REVISION = '1.012'; #dro# fixed readTopicText bug reported TWiki:Main.JoachimRahn; added month header feature (attributes: showmonthheader, monthheader...); added new tooltip feature (clicktooltip...)
 #$REVISION = '1.011'; #dro# added fontsize attribute; fixed HTML bug (validation);
 #$REVISION = '1.010'; #dro# added tablecolumnwidth and tabledatacellwidth attributes requested by TWiki:Main.VickiBrown;  added tooltip feature (tooltip... attributes);
@@ -70,17 +70,17 @@ REQUIRED
 
 Called to initialise the plugin. If everything is OK, should return
 a non-zero value. On non-fatal failure, should write a message
-using TWiki::Func::writeWarning and return 0. In this case
+using Foswiki::Func::writeWarning and return 0. In this case
 %FAILEDPLUGINS% will indicate which plugins failed.
 
 In the case of a catastrophic failure that will prevent the whole
 installation from working safely, this handler may use 'die', which
 will be trapped and reported in the browser.
 
-You may also call =TWiki::Func::registerTagHandler= here to register
-a function to handle tags that have standard TWiki syntax - for example,
+You may also call =Foswiki::Func::registerTagHandler= here to register
+a function to handle tags that have standard Foswiki syntax - for example,
 =%MYTAG{"my param" myarg="My Arg"}%. You can also override internal
-TWiki tag handling functions this way, though this practice is unsupported
+Foswiki tag handling functions this way, though this practice is unsupported
 and highly dangerous!
 
 =cut
@@ -89,30 +89,30 @@ sub initPlugin {
     my( $topic, $web, $user, $installWeb ) = @_;
 
     # check for Plugins.pm versions
-    if( $TWiki::Plugins::VERSION < 1.021 ) {
-        TWiki::Func::writeWarning( "Version mismatch between $pluginName and Plugins.pm" );
+    if( $Foswiki::Plugins::VERSION < 1.021 ) {
+        Foswiki::Func::writeWarning( "Version mismatch between $pluginName and Plugins.pm" );
         return 0;
     }
 
     # Get plugin preferences, variables defined by:
     #   * Set EXAMPLE = ...
-    ####my $exampleCfgVar = TWiki::Func::getPreferencesValue( "\U$pluginName\E_EXAMPLE" );
+    ####my $exampleCfgVar = Foswiki::Func::getPreferencesValue( "\U$pluginName\E_EXAMPLE" );
     # There is also an equivalent:
-    # $exampleCfgVar = TWiki::Func::getPluginPreferencesValue( 'EXAMPLE' );
+    # $exampleCfgVar = Foswiki::Func::getPluginPreferencesValue( 'EXAMPLE' );
     # that may _only_ be called from the main plugin package.
 
     ####$exampleCfgVar ||= 'default'; # make sure it has a value
 
     # register the _EXAMPLETAG function to handle %EXAMPLETAG{...}%
-    ####TWiki::Func::registerTagHandler( 'TIMETABLE', \&_TIMETABLE);
+    ####Foswiki::Func::registerTagHandler( 'TIMETABLE', \&_TIMETABLE);
 
     # Allow a sub to be called from the REST interface 
     # using the provided alias
-    ####TWiki::Func::registerRESTHandler('example', \&restExample);
+    ####Foswiki::Func::registerRESTHandler('example', \&restExample);
 
     eval {
-       require TWiki::Plugins::TimeTablePlugin::TimeTable;
-       &TWiki::Plugins::TimeTablePlugin::TimeTable::initPlugin;
+       require Foswiki::Plugins::TimeTablePlugin::TimeTable;
+       &Foswiki::Plugins::TimeTablePlugin::TimeTable::initPlugin;
     };
 
     # Plugin correctly initialized
@@ -123,9 +123,9 @@ sub initPlugin {
 # You would have one of these for each tag you want to process.
 sub _TIMETABLE{
     my($session, $params, $theTopic, $theWeb) = @_;
-    # $session  - a reference to the TWiki session object (if you don't know
+    # $session  - a reference to the Foswiki session object (if you don't know
     #             what this is, just ignore it)
-    # $params=  - a reference to a TWiki::Attrs object containing parameters.
+    # $params=  - a reference to a Foswiki::Attrs object containing parameters.
     #             This can be used as a simple hash that maps parameter names
     #             to values, with _DEFAULT being the name for the default
     #             parameter.
@@ -165,7 +165,7 @@ Return the user name, or =guest= if not logged in.
 
 This handler is called very early, immediately after =earlyInitPlugin=.
 
-__Since:__ TWiki::Plugins::VERSION = '1.010'
+__Since:__ Foswiki::Plugins::VERSION = '1.010'
 
 =cut
 
@@ -173,7 +173,7 @@ sub DISABLE_initializeUserHandler {
     # do not uncomment, use $_[0], $_[1]... instead
     ### my ( $loginName, $url, $pathInfo ) = @_;
 
-    TWiki::Func::writeDebug( "- ${pluginName}::initializeUserHandler( $_[0], $_[1] )" ) if $debug;
+    Foswiki::Func::writeDebug( "- ${pluginName}::initializeUserHandler( $_[0], $_[1] )" ) if $debug;
 }
 
 =pod
@@ -183,9 +183,9 @@ sub DISABLE_initializeUserHandler {
    * =$wikiName= - users wiki name
    * =$loginName= - users login name
 
-Called when a new user registers with this TWiki.
+Called when a new user registers with this Foswiki.
 
-__Since:__ TWiki::Plugins::VERSION = '1.010'
+__Since:__ Foswiki::Plugins::VERSION = '1.010'
 
 =cut
 
@@ -193,7 +193,7 @@ sub DISABLE_registrationHandler {
     # do not uncomment, use $_[0], $_[1]... instead
     ### my ( $web, $wikiName, $loginName ) = @_;
 
-    TWiki::Func::writeDebug( "- ${pluginName}::registrationHandler( $_[0], $_[1] )" ) if $debug;
+    Foswiki::Func::writeDebug( "- ${pluginName}::registrationHandler( $_[0], $_[1] )" ) if $debug;
 }
 
 =pod
@@ -207,13 +207,13 @@ the topic body and in form fields. It may be called many times while
 a topic is being rendered.
 
 Plugins that want to implement their own %TAGS% with non-trivial
-additional syntax should implement this function. Internal TWiki
-tags (and any tags declared using =TWiki::Func::registerTagHandler=)
+additional syntax should implement this function. Internal Foswiki
+tags (and any tags declared using =Foswiki::Func::registerTagHandler=)
 are expanded _before_, and then again _after_, this function is called
 to ensure all %TAGS% are expanded.
 
 For tags with trivial syntax it is far more efficient to use
-=TWiki::Func::registerTagHandler= (see =initPlugin=).
+=Foswiki::Func::registerTagHandler= (see =initPlugin=).
 
 __NOTE:__ when this handler is called, &lt;verbatim> blocks have been
 removed from the text (though all other HTML such as &lt;pre> blocks is
@@ -228,19 +228,19 @@ sub commonTagsHandler {
     # do not uncomment, use $_[0], $_[1]... instead
     ### my ( $text, $topic, $web ) = @_;
 
-    TWiki::Func::writeDebug( "- ${pluginName}::commonTagsHandler( $_[2].$_[1] )" ) if $debug;
+    Foswiki::Func::writeDebug( "- ${pluginName}::commonTagsHandler( $_[2].$_[1] )" ) if $debug;
 
     # do custom extension rule, like for example:
     # $_[0] =~ s/%XYZ%/&handleXyz()/ge;
     # $_[0] =~ s/%XYZ{(.*?)}%/&handleXyz($1)/ge;
 
     eval {
-	    require TWiki::Plugins::TimeTablePlugin::TimeTable;
+	    require Foswiki::Plugins::TimeTablePlugin::TimeTable;
              
-	    $_[0] =~ s/<\/head>/<script src="%PUBURL%\/%TWIKIWEB%\/$pluginName\/timetabletooltips.js" language="javascript" type="text\/javascript"><\/script><\/head>/is unless ($_[0]=~/timetabletooltips.js/);
-	    $_[0] =~ s/%TIMETABLE%/&TWiki::Plugins::TimeTablePlugin::TimeTable::expand("",$_[0],$_[1],$_[2])/ge;
-	    $_[0] =~ s/%TIMETABLE{(.*?)}%/&TWiki::Plugins::TimeTablePlugin::TimeTable::expand($1, $_[0], $_[1], $_[2])/ge;
-	    $_[0] =~ s/%TTCM{(.*?)}%/&TWiki::Plugins::TimeTablePlugin::TimeTable::inflate($1, $_[0],$_[1],$_[2])/ge;
+	    $_[0] =~ s/<\/head>/<script src="%PUBURL%\/%SYSTEMWEB%\/$pluginName\/timetabletooltips.js" language="javascript" type="text\/javascript"><\/script><\/head>/is unless ($_[0]=~/timetabletooltips.js/);
+	    $_[0] =~ s/%TIMETABLE%/&Foswiki::Plugins::TimeTablePlugin::TimeTable::expand("",$_[0],$_[1],$_[2])/ge;
+	    $_[0] =~ s/%TIMETABLE{(.*?)}%/&Foswiki::Plugins::TimeTablePlugin::TimeTable::expand($1, $_[0], $_[1], $_[2])/ge;
+	    $_[0] =~ s/%TTCM{(.*?)}%/&Foswiki::Plugins::TimeTablePlugin::TimeTable::inflate($1, $_[0],$_[1],$_[2])/ge;
 	    $_[0] =~ s/%TTCM%//g;
 
 	    $_[0] =~ s/%TTTOPICSETUP%//g;
@@ -249,7 +249,7 @@ sub commonTagsHandler {
 	    $_[0] =~ s/%TTSETUP%//g;
 	    $_[0] =~ s/%TTSETUP{.*?}%//g;
     };
-    &TWiki::Func::writeWarning($@) if $@;
+    &Foswiki::Func::writeWarning($@) if $@;
 }
 
 =pod
@@ -258,7 +258,7 @@ sub commonTagsHandler {
    * =$text= - text to be processed
    * =$topic= - the name of the topic in the current CGI query
    * =$web= - the name of the web in the current CGI query
-This handler is called before TWiki does any expansion of it's own
+This handler is called before Foswiki does any expansion of it's own
 internal tags. It is designed for use by cache plugins. Note that
 when this handler is called, &lt;verbatim> blocks are still present
 in the text.
@@ -276,7 +276,7 @@ sub DISABLE_beforeCommonTagsHandler {
     # do not uncomment, use $_[0], $_[1]... instead
     ### my ( $text, $topic, $web ) = @_;
 
-    TWiki::Func::writeDebug( "- ${pluginName}::beforeCommonTagsHandler( $_[2].$_[1] )" ) if $debug;
+    Foswiki::Func::writeDebug( "- ${pluginName}::beforeCommonTagsHandler( $_[2].$_[1] )" ) if $debug;
 }
 
 =pod
@@ -285,7 +285,7 @@ sub DISABLE_beforeCommonTagsHandler {
    * =$text= - text to be processed
    * =$topic= - the name of the topic in the current CGI query
    * =$web= - the name of the web in the current CGI query
-This handler is after TWiki has completed expansion of %TAGS%.
+This handler is after Foswiki has completed expansion of %TAGS%.
 It is designed for use by cache plugins. Note that when this handler
 is called, &lt;verbatim> blocks are present in the text.
 
@@ -302,7 +302,7 @@ sub DISABLE_afterCommonTagsHandler {
     # do not uncomment, use $_[0], $_[1]... instead
     ### my ( $text, $topic, $web ) = @_;
 
-    TWiki::Func::writeDebug( "- ${pluginName}::afterCommonTagsHandler( $_[2].$_[1] )" ) if $debug;
+    Foswiki::Func::writeDebug( "- ${pluginName}::afterCommonTagsHandler( $_[2].$_[1] )" ) if $debug;
 }
 
 =pod
@@ -311,7 +311,7 @@ sub DISABLE_afterCommonTagsHandler {
    * =$text= - text, with the head, verbatim and pre blocks replaced with placeholders
    * =\%removed= - reference to a hash that maps the placeholders to the removed blocks.
 
-Handler called immediately before TWiki syntax structures (such as lists) are
+Handler called immediately before Foswiki syntax structures (such as lists) are
 processed, but after all variables have been expanded. Use this handler to process special syntax only recognised by your plugin.
 
 Placeholders are text strings constructed using the tag name and a sequence number e.g. 'pre1', "verbatim6", "head1" etc. Placeholders are inserted into the text inside &lt;!--!marker!--&gt; characters so the text will contain &lt;!--!pre1!--&gt; for placeholder pre1.
@@ -341,7 +341,7 @@ __NOTE__: This handler is called once for each rendered block of text i.e. it ma
 __NOTE:__ meta-data is _not_ embedded in the text passed to this
 handler.
 
-Since TWiki::Plugins::VERSION = '1.026'
+Since Foswiki::Plugins::VERSION = '1.026'
 
 =cut
 
@@ -360,7 +360,7 @@ __NOTE__: This handler is called once for each rendered block of text i.e. it ma
 __NOTE:__ meta-data is _not_ embedded in the text passed to this
 handler.
 
-Since TWiki::Plugins::VERSION = '1.026'
+Since Foswiki::Plugins::VERSION = '1.026'
 
 =cut
 
@@ -380,7 +380,7 @@ in the edit box. It is called once when the =edit= script is run.
 
 __NOTE__: meta-data may be embedded in the text passed to this handler (using %META: tags)
 
-__Since:__ TWiki::Plugins::VERSION = '1.010'
+__Since:__ Foswiki::Plugins::VERSION = '1.010'
 
 =cut
 
@@ -388,7 +388,7 @@ sub DISABLE_beforeEditHandler {
     # do not uncomment, use $_[0], $_[1]... instead
     ### my ( $text, $topic, $web ) = @_;
 
-    TWiki::Func::writeDebug( "- ${pluginName}::beforeEditHandler( $_[2].$_[1] )" ) if $debug;
+    Foswiki::Func::writeDebug( "- ${pluginName}::beforeEditHandler( $_[2].$_[1] )" ) if $debug;
 }
 
 =pod
@@ -405,7 +405,7 @@ __NOTE:__ this handler is _not_ called unless the text is previewed.
 __NOTE:__ meta-data is _not_ embedded in the text passed to this
 handler.
 
-__Since:__ TWiki::Plugins::VERSION = '1.010'
+__Since:__ Foswiki::Plugins::VERSION = '1.010'
 
 =cut
 
@@ -413,7 +413,7 @@ sub DISABLE_afterEditHandler {
     # do not uncomment, use $_[0], $_[1]... instead
     ### my ( $text, $topic, $web ) = @_;
 
-    TWiki::Func::writeDebug( "- ${pluginName}::afterEditHandler( $_[2].$_[1] )" ) if $debug;
+    Foswiki::Func::writeDebug( "- ${pluginName}::afterEditHandler( $_[2].$_[1] )" ) if $debug;
 }
 
 =pod
@@ -422,13 +422,13 @@ sub DISABLE_afterEditHandler {
    * =$text= - text _with embedded meta-data tags_
    * =$topic= - the name of the topic in the current CGI query
    * =$web= - the name of the web in the current CGI query
-   * =$meta= - the metadata of the topic being saved, represented by a TWiki::Meta object.
+   * =$meta= - the metadata of the topic being saved, represented by a Foswiki::Meta object.
 
 This handler is called each time a topic is saved.
 
 __NOTE:__ meta-data is embedded in $text (using %META: tags)
 
-__Since:__ TWiki::Plugins::VERSION = '1.010'
+__Since:__ Foswiki::Plugins::VERSION = '1.010'
 
 =cut
 
@@ -436,7 +436,7 @@ sub DISABLE_beforeSaveHandler {
     # do not uncomment, use $_[0], $_[1]... instead
     ### my ( $text, $topic, $web ) = @_;
 
-    TWiki::Func::writeDebug( "- ${pluginName}::beforeSaveHandler( $_[2].$_[1] )" ) if $debug;
+    Foswiki::Func::writeDebug( "- ${pluginName}::beforeSaveHandler( $_[2].$_[1] )" ) if $debug;
 }
 
 =pod
@@ -447,13 +447,13 @@ sub DISABLE_beforeSaveHandler {
    * =$topic= - the name of the topic in the current CGI query
    * =$web= - the name of the web in the current CGI query
    * =$error= - any error string returned by the save.
-   * =$meta= - the metadata of the saved topic, represented by a TWiki::Meta object 
+   * =$meta= - the metadata of the saved topic, represented by a Foswiki::Meta object 
 
 This handler is called each time a topic is saved.
 
 __NOTE:__ meta-data is embedded in $text (using %META: tags)
 
-__Since:__ TWiki::Plugins::VERSION = '1.020'
+__Since:__ Foswiki::Plugins::VERSION = '1.020'
 
 =cut
 
@@ -461,7 +461,7 @@ sub DISABLE_afterSaveHandler {
     # do not uncomment, use $_[0], $_[1]... instead
     ### my ( $text, $topic, $web, $error, $meta ) = @_;
 
-    TWiki::Func::writeDebug( "- ${pluginName}::afterSaveHandler( $_[2].$_[1] )" ) if $debug;
+    Foswiki::Func::writeDebug( "- ${pluginName}::afterSaveHandler( $_[2].$_[1] )" ) if $debug;
 }
 
 =pod
@@ -478,14 +478,14 @@ will include at least the following attributes:
    * =comment= - the comment
    * =user= - the user's Web.<nop>WikiName
 
-__Since:__ TWiki::Plugins::VERSION = '1.023'
+__Since:__ Foswiki::Plugins::VERSION = '1.023'
 
 =cut
 
 sub DISABLE_beforeAttachmentSaveHandler {
     # do not uncomment, use $_[0], $_[1]... instead
     ###   my( $attrHashRef, $topic, $web ) = @_;
-    TWiki::Func::writeDebug( "- ${pluginName}::beforeAttachmentSaveHandler( $_[2].$_[1] )" ) if $debug;
+    Foswiki::Func::writeDebug( "- ${pluginName}::beforeAttachmentSaveHandler( $_[2].$_[1] )" ) if $debug;
 }
 
 =pod
@@ -501,14 +501,14 @@ will include at least the following attributes:
    * =comment= - the comment
    * =user= - the user's Web.<nop>WikiName
 
-__Since:__ TWiki::Plugins::VERSION = '1.023'
+__Since:__ Foswiki::Plugins::VERSION = '1.023'
 
 =cut
 
 sub DISABLE_afterAttachmentSaveHandler {
     # do not uncomment, use $_[0], $_[1]... instead
     ###   my( $attrHashRef, $topic, $web ) = @_;
-    TWiki::Func::writeDebug( "- ${pluginName}::afterAttachmentSaveHandler( $_[2].$_[1] )" ) if $debug;
+    Foswiki::Func::writeDebug( "- ${pluginName}::afterAttachmentSaveHandler( $_[2].$_[1] )" ) if $debug;
 }
 
 =pod
@@ -555,16 +555,16 @@ $headers->{expires} = '+1h';
 
 Note that this is the HTTP header which is _not_ the same as the HTML
 &lt;HEAD&gt; tag. The contents of the &lt;HEAD&gt; tag may be manipulated
-using the =TWiki::Func::addToHEAD= method.
+using the =Foswiki::Func::addToHEAD= method.
 
-__Since:__ TWiki::Plugins::VERSION 1.026
+__Since:__ Foswiki::Plugins::VERSION 1.026
 
 =cut
 
 sub DISABLE_modifyHeaderHandler {
     my ( $headers, $query ) = @_;
 
-    TWiki::Func::writeDebug( "- ${pluginName}::modifyHeaderHandler()" ) if $debug;
+    Foswiki::Func::writeDebug( "- ${pluginName}::modifyHeaderHandler()" ) if $debug;
 }
 
 =pod
@@ -573,13 +573,13 @@ sub DISABLE_modifyHeaderHandler {
    * =$query= - the CGI query
    * =$url= - the URL to redirect to
 
-This handler can be used to replace TWiki's internal redirect function.
+This handler can be used to replace Foswiki's internal redirect function.
 
 If this handler is defined in more than one plugin, only the handler
 in the earliest plugin in the INSTALLEDPLUGINS list will be called. All
 the others will be ignored.
 
-__Since:__ TWiki::Plugins::VERSION = '1.010'
+__Since:__ Foswiki::Plugins::VERSION = '1.010'
 
 =cut
 
@@ -587,7 +587,7 @@ sub DISABLE_redirectCgiQueryHandler {
     # do not uncomment, use $_[0], $_[1] instead
     ### my ( $query, $url ) = @_;
 
-    TWiki::Func::writeDebug( "- ${pluginName}::redirectCgiQueryHandler( query, $_[1] )" ) if $debug;
+    Foswiki::Func::writeDebug( "- ${pluginName}::redirectCgiQueryHandler( query, $_[1] )" ) if $debug;
 }
 
 =pod
@@ -615,11 +615,11 @@ sub DISABLE_renderFormFieldForEditHandler {
 ---++ restExample($session) -> $text
 
 This is an example of a sub to be called by the =rest= script. The parameter is:
-   * =$session= - The TWiki object associated to this session.
+   * =$session= - The Foswiki object associated to this session.
 
 Additional parameters can be recovered via de query object in the $session.
 
-For more information, check TWiki:TWiki.TWikiScripts#rest
+For more information, check Foswiki:System.CommandAndCGIScripts#rest
 
 =cut
 

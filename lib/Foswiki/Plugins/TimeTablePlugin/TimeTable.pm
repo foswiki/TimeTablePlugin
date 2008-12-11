@@ -14,9 +14,9 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 #
-# For licensing info read LICENSE file in the TWiki root.
+# For licensing info read LICENSE file in the Foswiki root.
 
-package TWiki::Plugins::TimeTablePlugin::TimeTable;
+package Foswiki::Plugins::TimeTablePlugin::TimeTable;
 
 use strict;
 ###use warnings;
@@ -96,7 +96,7 @@ sub inflate {
 
         &_initRegexs(); 
 
-	$cgi = &TWiki::Func::getCgiQuery();
+	$cgi = &Foswiki::Func::getCgiQuery();
 
 	my ($starttime, $endtime, $duration, $fgcolor, $bgcolor) = &_getTTCMValues($attributes);
 
@@ -115,7 +115,7 @@ sub inflate {
 # =========================
 sub _getTTCMValues {
 	my ($attributes) = @_;
-	my $textattr = &TWiki::Func::extractNameValuePair($attributes);
+	my $textattr = &Foswiki::Func::extractNameValuePair($attributes);
 
 	my $duration = undef;
 	my ($timerange, $fgcolor, $bgcolor) = split /\s*\,\s*/, $textattr;
@@ -139,7 +139,7 @@ sub _getTTCMValues {
 }
 # =========================
 sub _initDefaults {
-	my $webbgcolor = &TWiki::Func::getPreferencesValue("WEBBGCOLOR", $web) || '#33CC66';
+	my $webbgcolor = &Foswiki::Func::getPreferencesValue("WEBBGCOLOR", $web) || '#33CC66';
 	%defaults = (
 		tablecaption => "Timetable",	# table caption
 		lang => 'English',		# default language
@@ -164,7 +164,7 @@ sub _initDefaults {
 		weekendfgcolor => 'black',	#
 		tablebgcolor => 'white',	# table background color
 		timeformat => '24', 		# timeformat 12 or 24
-		unknownparamsmsg => '%RED% Sorry, some parameters are unknown: %UNKNOWNPARAMSLIST% %ENDCOLOR% <br/> Allowed parameters are (see TWiki.'.$pluginName.' topic for more details): %KNOWNPARAMSLIST%',
+		unknownparamsmsg => '%RED% Sorry, some parameters are unknown: %UNKNOWNPARAMSLIST% %ENDCOLOR% <br/> Allowed parameters are (see %SYSTEMWEB%.'.$pluginName.' topic for more details): %KNOWNPARAMSLIST%',
 		displaytime => 0,		# display time in description
 		workingstarttime => '9:00',	# 
 		workingendtime => '17:00',
@@ -262,7 +262,7 @@ sub _initRegexs {
 sub _initOptions {
         my ($attributes) = @_;
 
-        my %params = &TWiki::Func::extractParameters($attributes);
+        my %params = &Foswiki::Func::extractParameters($attributes);
 
 
         my @allOptions = keys %defaults;
@@ -273,7 +273,7 @@ sub _initOptions {
         }
         return 0 if $#unknownParams != -1; 
 
-        $cgi = &TWiki::Func::getCgiQuery();
+        $cgi = &Foswiki::Func::getCgiQuery();
 
         # Setup options (attributes>plugin preferences>defaults):
         %options= ();
@@ -288,9 +288,9 @@ sub _initOptions {
                         }
                 } else {
                         if (grep /^\Q$option\E$/, @flagOptions) {
-                                $v = ( &TWiki::Func::getPreferencesFlag("\U${pluginName}_$option\E") || undef );
+                                $v = ( &Foswiki::Func::getPreferencesFlag("\U${pluginName}_$option\E") || undef );
                         } else {
-                                $v = &TWiki::Func::getPreferencesValue("\U${pluginName}_$option\E");
+                                $v = &Foswiki::Func::getPreferencesValue("\U${pluginName}_$option\E");
                         }
 			$v = undef if (defined $v) && ($v eq "");
                         $options{$option}=(defined $v)? $v : $defaults{$option};
@@ -300,7 +300,7 @@ sub _initOptions {
         # Render some options:
         foreach my $option (@renderedOptions) {
                 if ($options{$option} !~ /^(\s|\&nbsp\;)*$/) {
-                        $options{$option}=&TWiki::Func::renderText($options{$option}, $web);
+                        $options{$option}=&Foswiki::Func::renderText($options{$option}, $web);
                 }
         }
 
@@ -983,7 +983,7 @@ sub _renderNav {
 	my ($next) = @_;
 	my $nav="";
 	return "" if !$options{'compatmode'};
-	my $query = &TWiki::Func::getCgiQuery();
+	my $query = &Foswiki::Func::getCgiQuery();
 
 	my $ttppage = $query->param('ttppage'.$ttid) ? &_parseInt($query->param('ttppage'.$ttid)) : 0;
 
@@ -1056,7 +1056,7 @@ sub _renderText {
 	$title .= $trange;
 
 
-	$title=TWiki::Func::renderText($title,$web);
+	$title=Foswiki::Func::renderText($title,$web);
 	$title=~s/<\/?\w[^>]*>//g;
 
 	### $title.=" (rows=$rs, fillRows=$fillRows)"; ## DEBUG
@@ -1432,7 +1432,7 @@ sub _mystrftime {
 # =========================
 sub _handleTopicSetup {
 	my ($attributes, $web, $topic, $timezone) = @_;
-        my %params = &TWiki::Func::extractParameters($attributes);
+        my %params = &Foswiki::Func::extractParameters($attributes);
 
 	$topicDefaults{"$web.$topic"} = \%params;
 	${$topicDefaults{"$web.$topic"}}{'timezone'}=$timezone if defined $timezone;
@@ -1456,7 +1456,7 @@ sub _processTopicSetup {
 	return $_[0];
 }
 
-### dro: following code is derived from TWiki:Plugins.CalendarPlugin:
+### dro: following code is derived from Foswiki:Extentions.CalendarPlugin:
 # =========================
 sub _getTopicText() {
 
@@ -1502,10 +1502,10 @@ sub _readTopicText
 {
         my( $theWeb, $theTopic ) = @_;
         my $text = '';
-        if( $TWiki::Plugins::VERSION >= 1.010 ) {
-                $text = &TWiki::Func::readTopicText( $theWeb, $theTopic, '', 1 );
+        if( $Foswiki::Plugins::VERSION >= 1.010 ) {
+                $text = &Foswiki::Func::readTopicText( $theWeb, $theTopic, '', 1 );
         } else {
-                $text = &TWiki::Func::readTopic( $theWeb, $theTopic );
+                $text = &Foswiki::Func::readTopic( $theWeb, $theTopic );
         }
         # return raw topic text, including meta data
         return $text;
@@ -1517,7 +1517,7 @@ sub _expandIncludedEvents
 
         my ($theWeb, $theTopic) = ($web, $topic);
 
-        my $webTopic = &TWiki::Func::extractNameValuePair( $theAttributes );
+        my $webTopic = &Foswiki::Func::extractNameValuePair( $theAttributes );
         if( $webTopic =~ /^([^\.]+)[\.\/](.*)$/ ) {
                 $theWeb = $1;
                 $theTopic = $2;
@@ -1538,14 +1538,14 @@ sub _expandIncludedEvents
         # recursively expand includes
         $text =~ s/%INCLUDE{(.*?)}%/&_expandIncludedEvents( $1, $theProcessedTopicsRef )/geo;
 
-        ## $text = TWiki::Func::expandCommonVariables($text, $theTopic, $theWeb);
+        ## $text = Foswiki::Func::expandCommonVariables($text, $theTopic, $theWeb);
 
         return $text;
 }
 # =========================
 sub _createUnknownParamsMessage {
         my $msg;
-        $msg = TWiki::Func::getPreferencesValue("\U$pluginName\E_UNKNOWNPARAMSMSG") || undef;
+        $msg = Foswiki::Func::getPreferencesValue("\U$pluginName\E_UNKNOWNPARAMSMSG") || undef;
         $msg = $defaults{unknownparamsmsg} unless defined $msg;
         $msg =~ s/\%UNKNOWNPARAMSLIST\%/join(', ', sort @unknownParams)/eg;
         $msg =~ s/\%KNOWNPARAMSLIST\%/join(', ', sort keys %defaults)/eg;

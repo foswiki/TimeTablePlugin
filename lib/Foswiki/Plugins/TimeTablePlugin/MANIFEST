@@ -1,0 +1,9 @@
+lib/Foswiki/Plugins/TimeTablePlugin/TimeTable.pm 0644 Plugin module
+lib/Foswiki/Plugins/TimeTablePlugin.pm 0644 Plugin module
+pub/System/TimeTablePlugin/example.png 0644 Example image
+pub/System/TimeTablePlugin/example2.png 0644 Example image
+pub/System/TimeTablePlugin/timetabletooltips.js 0644 JavaScript module
+data/System/TimeTablePlugin.txt 0644 Documentation
+data/System/VarTIMETABLE.txt 0644 Documentation
+data/System/VarTTCM.txt 0644 Documentation
+data/System/VarTTTOPICSETUP.txt 0644 Documentation

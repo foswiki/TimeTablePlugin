@@ -254,53 +254,53 @@ Plugin settings are stored as preferences variables. To reference a plugin setti
 
 ---++ Plugin Installation Instructions
 
-__Note:__ You do not need to install anything on the browser to use this plugin. The following instructions are for the administrator who installs the plugin on the TWiki server. 
+__Note:__ You do not need to install anything on the browser to use this plugin. The following instructions are for the administrator who installs the plugin on the Foswiki server. 
 
    * Download the ZIP file from the Plugin web (see below)
    * Install the required Perl modules (Date::Calc and POSIX), e.g: perl -MCPAN -e "install Date::Calc"
-   * Unzip ==%TOPIC%.zip== in your twiki installation directory. Do not forget to change file permissions. Content:
+   * Unzip ==%TOPIC%.zip== in your Foswiki installation directory. Do not forget to change file permissions. Content:
      | *File:* | *Description:* |
      | ==data/System/%TOPIC%.txt== | Plugin topic |
-     | ==data/TWiki/VarTIMETABLE.txt== | Documentation |
-     | ==data/TWiki/VarTTCM.txt== | Documentation |
-     | ==data/TWiki/VarTTTOPICSETUP.txt== | Documentation |
+     | ==data/System/VarTIMETABLE.txt== | Documentation |
+     | ==data/System/VarTTCM.txt== | Documentation |
+     | ==data/System/VarTTTOPICSETUP.txt== | Documentation |
      | ==lib/Foswiki/Plugins/%TOPIC%.pm== | Plugin Perl module |
      | ==lib/Foswiki/Plugins/%TOPIC%/TimeTable.pm== | Plugin Perl library |
-     | ==pub/TWiki/%TOPIC%/timetabletooltips.js== | <nop>JavaScript library |
-     | ==pub/TWiki/%TOPIC%/example.png== | example image 1 |
-     | ==pub/TWiki/%TOPIC%/example2.png== | example image 2 |
+     | ==pub/System/%TOPIC%/timetabletooltips.js== | <nop>JavaScript library |
+     | ==pub/System/%TOPIC%/example.png== | example image 1 |
+     | ==pub/System/%TOPIC%/example2.png== | example image 2 |
    * Configure the Plugin:
-      * TWiki 4.0 and up: Run the [[%SCRIPTURL%/configure%SCRIPTSUFFIX%][configure]] script to enable the Plugin
+      * Run the [[%SCRIPTURL%/configure%SCRIPTSUFFIX%][configure]] script to enable the Plugin
       * Change the Plugin settings as needed
    * Test if the installation was successful:
       * see Examples section
 
 ---++ Plugin Info
 
-|  Plugin Author: | TWiki:Main.DanielRohde |
-|  Copyright: | &copy; 2006, TWiki:Main.DanielRohde |
+|  Plugin Author: | Foswiki:Main.DanielRohde |
+|  Copyright: | &copy; 2006-2008, Foswiki:Main.DanielRohde |
 |  License: | GPL ([[http://www.gnu.org/copyleft/gpl.html][GNU General Public License]]) |
 |  Plugin Version: | V1.017 (BETA) |
 |  Change History: | <!-- versions below in reverse order -->&nbsp; |
-|  V1.017 (BETA) | TWiki:Main.DanielRohde: added hidettcm attribute requested by TWiki:Main.StevenCorfman |
-|  V1.016 (14 Nov 2008) | TWiki:Main.DanielRohde: added overflow:auto style; fixed unknownparamsmsg bug; |
-|  V1.015 (29 Jul 2008) | TWiki:Main.DanielRohde: fixed rotated table bugs (tooltips, showweekend="off") |
-|  V1.014 (10 Jul 2008) | TWiki:Main.DanielRohde: added documentation requested by TWiki:Main.PeterThoeny; added rotated table feature requested by TWiki:Main.VickiBrown; fixed doc bug reported by TWiki:Main.JoeGainey |
-|  V1.013 (24 May 2007) | TWiki:Main.DanielRohde: fixed major time parsing bug reported by TWiki:Main.LarsEik; fixed major bug: events with a time range before start time should not be displayed; fixed major TTCM bug reported by TWiki:Main.ArthurClemens; added URL parameter feature; added new attributes (textwrapper, tableborder, tablewidth, tablecell...); added browser based text wrapping feature requested by TWiki:Main.ArthurClemens |
-|  V1.012 (14 May 2007) | TWiki:Main.DanielRohde: fixed readTopicText bug reported TWiki:Main.JoachimRahn; added month header feature (attributes: showmonthheader, monthheader...); added new tooltip feature (clicktooltip...) |
-|  V1.011 (1 Mar 2007) | TWiki:Main.DanielRohde: added fontsize attribute; fixed HTML bug (validation); |
-|  V1.010 (19 Feb 2007) | TWiki:Main.DanielRohde: added tablecolumnwidth and tabledatacellwidth attributes requested by TWiki:Main.VickiBrown;  added tooltip feature (tooltip... attributes); |
-|  V1.009 (7 Aug 2006) | TWiki:Main.DanielRohde: added duration feature; added time zone abbreviations; improved performance; fixed conflict rendering bug; fixed time zone bugs (whole-time event handling, topic include) |
-|  V1.008 (2 Aug 2006) | TWiki:Main.DanielRohde: added timezone feature requested by TWiki:Main.BenWatts; fixed major midday/midnight (12pm/12am) bug reported by TWiki:Main.BenWatts; fixed overlapping day bug; fixed periodic event bug; fixed minor bugs (stylesheet bug: annoying <nop>JavaScript errors; empty event row) |
-|  V1.007 (23 Jun 2006) | TWiki:Main.DanielRohde: fixed major bug (wholetimerow: empty column) |
-|  V1.006 (23 Jun 2006) | TWiki:Main.DanielRohde: fixed major mod_perl bug (paging in compatmode); added whole-time row feature; fixed minor bugs (empty column color; cutted text) |
-|  V1.005 (8 Jun 2006) | TWiki:Main.DanielRohde: fixed typos (documentation); added new features (compatmode only): inline time range feature and navigation; minor improvements (table header, ...) |
-|  V1.004 (31 May 2006) | TWiki:Main.DanielRohde: fixed typos (documentation, timeformat); added new attributes (days, forcestartdate, nowfgcolor, nowbgcolor); fixed minor bug (periodic repeater); added new event type (list) |
-|  V1.003 (24 May 2006) | TWiki:Main.DanielRohde: added compatibility mode (Foswiki:Extensions.CalendarPlugin event types); added documentation and new attributes; fixed bugs (bgcolor bug; conflict rendering; documentation; error logs; warnings);|
-|  V1.002 (22 May 2006): | TWiki:Main.DanielRohde: fixed major bugs (conflict handling, preferences); added documentation; |
-|  V1.001 (19 May 2006): | TWiki:Main.DanielRohde: fixed some major bugs (conflict entries, parameter handling, long descriptions); added documentation; |
-|  V1.000 (16 May 2006): | TWiki:Main.DanielRohde: Initial version |
-|  TWiki Dependency: | $TWiki::Plugins::VERSION 1.021 |
+|  V1.017 (BETA) | Foswiki:Main.DanielRohde: added hidettcm attribute requested by TWiki:Main.StevenCorfman. Rebranded to Foswiki by Kenneth Lavrsen |
+|  V1.016 (14 Nov 2008) | Foswiki:Main.DanielRohde: added overflow:auto style; fixed unknownparamsmsg bug; |
+|  V1.015 (29 Jul 2008) | Foswiki:Main.DanielRohde: fixed rotated table bugs (tooltips, showweekend="off") |
+|  V1.014 (10 Jul 2008) | Foswiki:Main.DanielRohde: added documentation requested by TWiki:Main.PeterThoeny; added rotated table feature requested by TWiki:Main.VickiBrown; fixed doc bug reported by TWiki:Main.JoeGainey |
+|  V1.013 (24 May 2007) | Foswiki:Main.DanielRohde: fixed major time parsing bug reported by Foswiki:Main.LarsEik; fixed major bug: events with a time range before start time should not be displayed; fixed major TTCM bug reported by Foswiki:Main.ArthurClemens; added URL parameter feature; added new attributes (textwrapper, tableborder, tablewidth, tablecell...); added browser based text wrapping feature requested by Foswiki:Main.ArthurClemens |
+|  V1.012 (14 May 2007) | Foswiki:Main.DanielRohde: fixed readTopicText bug reported TWiki:Main.JoachimRahn; added month header feature (attributes: showmonthheader, monthheader...); added new tooltip feature (clicktooltip...) |
+|  V1.011 (1 Mar 2007) | Foswiki:Main.DanielRohde: added fontsize attribute; fixed HTML bug (validation); |
+|  V1.010 (19 Feb 2007) | Foswiki:Main.DanielRohde: added tablecolumnwidth and tabledatacellwidth attributes requested by TWiki:Main.VickiBrown;  added tooltip feature (tooltip... attributes); |
+|  V1.009 (7 Aug 2006) | Foswiki:Main.DanielRohde: added duration feature; added time zone abbreviations; improved performance; fixed conflict rendering bug; fixed time zone bugs (whole-time event handling, topic include) |
+|  V1.008 (2 Aug 2006) | Foswiki:Main.DanielRohde: added timezone feature requested by TWiki:Main.BenWatts; fixed major midday/midnight (12pm/12am) bug reported by TWiki:Main.BenWatts; fixed overlapping day bug; fixed periodic event bug; fixed minor bugs (stylesheet bug: annoying <nop>JavaScript errors; empty event row) |
+|  V1.007 (23 Jun 2006) | Foswiki:Main.DanielRohde: fixed major bug (wholetimerow: empty column) |
+|  V1.006 (23 Jun 2006) | Foswiki:Main.DanielRohde: fixed major mod_perl bug (paging in compatmode); added whole-time row feature; fixed minor bugs (empty column color; cutted text) |
+|  V1.005 (8 Jun 2006) | Foswiki:Main.DanielRohde: fixed typos (documentation); added new features (compatmode only): inline time range feature and navigation; minor improvements (table header, ...) |
+|  V1.004 (31 May 2006) | Foswiki:Main.DanielRohde: fixed typos (documentation, timeformat); added new attributes (days, forcestartdate, nowfgcolor, nowbgcolor); fixed minor bug (periodic repeater); added new event type (list) |
+|  V1.003 (24 May 2006) | Foswiki:Main.DanielRohde: added compatibility mode (Foswiki:Extensions.CalendarPlugin event types); added documentation and new attributes; fixed bugs (bgcolor bug; conflict rendering; documentation; error logs; warnings);|
+|  V1.002 (22 May 2006): | Foswiki:Main.DanielRohde: fixed major bugs (conflict handling, preferences); added documentation; |
+|  V1.001 (19 May 2006): | Foswiki:Main.DanielRohde: fixed some major bugs (conflict entries, parameter handling, long descriptions); added documentation; |
+|  V1.000 (16 May 2006): | Foswiki:Main.DanielRohde: Initial version |
+|  Foswiki Dependency: | $Foswiki::Plugins::VERSION 1.021 |
 |  CPAN Dependencies: | CPAN:Date::Calc %BR% CPAN:POSIX |
 |  Other Dependencies: | none |
 |  Perl Version: | 5.005 |
@@ -310,4 +310,4 @@ __Note:__ You do not need to install anything on the browser to use this plugin.
 
 __Related Topics:__ [[%SYSTEMWEB%.Plugins][Plugins]], %SYSTEMWEB%.DeveloperDocumentationCategory, %SYSTEMWEB%.AdminDocumentationCategory, %SYSTEMWEB%.DefaultPreferences, %USERSWEB%.SitePreferences
 
--- TWiki:Main.DanielRohde - 16 May 2006
+-- Foswiki:Main.DanielRohde - 16 May 2006
