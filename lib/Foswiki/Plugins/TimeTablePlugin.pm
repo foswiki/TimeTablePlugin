@@ -34,9 +34,10 @@ $VERSION = '$Rev: 8670$';
 # This is a free-form string you can use to "name" your own plugin version.
 # It is *not* used by the build automation tools, but is reported as part
 # of the version number in PLUGINDESCRIPTIONS.
-$RELEASE = 'Dakar';
- 
-$REVISION = '1.017'; #dro# added hidettcm attribute requested by TWiki:Main.StevenCorfman
+$RELEASE = 'Foswiki';
+
+$REVISION = '1.018'; # Kenneth Lavrsen: Foswiki version - no features added 
+#$REVISION = '1.017'; #dro# added hidettcm attribute requested by TWiki:Main.StevenCorfman
 #$REVISION = '1.016'; #dro# added overflow:auto style; fixed unknownparamsmsg bug;
 #$REVISION = '1.015'; #dro# fixed rotated table bugs (tooltips, showweekend="off")
 #$REVISION = '1.014'; #dro# added documentation requested by TWiki:Main.PeterThoeny; added rotated table feature requested by TWiki:Main.VickiBrown; fixed doc bug reported by TWiki:Main.JoeGainey 
