@@ -37,7 +37,7 @@ The TimeTablePlugin supports
    * all HolidaylistPlugin and CalendarPlugin event types if the compatibility mode is enabled (=compatmode="on"=)
    * navigation to other weeks (only if compatibility mode is enabled: =compatmode="on"=)
    * own colors for every event (add the foreground/background colors to a event definition or use the =%<nop>TTCM%= tag of the compatibility mode)
-   * event definitions from other topics (attribute: =topic=) - including overwrite of the time zone (e.g. =topic="EvenTopic2:-3=)
+   * event definitions from other topics (attribute: =topic=) - including override of the time zone (e.g. =topic="EvenTopic2:-3=)
    * customization of 
       * all text outputs and colors (attributes: =name, headerformat, ...=)
       * the table rendering (attributes: =days, startdate, timeinterval, showtimeline, ...=)
@@ -99,16 +99,16 @@ Example: %<nop>TIMETABLE{lang="Deutsch" timeinterval="15" }%
 | timeinterval | interval steps in minutes for the timeline | timeinterval="30" |
 | timezone | a hour offset (allowed values: -12 ... 0 ... +12) for time correction or a time zone abbreviation (e.g. UTC, CET ...) | timezone="0" |
 | timezoneabbr | a comma separated list of time zone abbreviations with UTC offsets; the standard time zone abbreviations will be extended with this user defined abbreviations | timezoneabbr="CET:+1, MEST:+2" |
-| topic  | a comma separated list of source topics; you can add a time zone to any source topic name by adding a ':' and a hour offset (-12 ... +12) or a time zone abbreviation, e.g: =topic="MySourceTopic:-2"=  %X% this time zone feature overwrites the =timezone= attribute of a =%<nop>TTTOPICSETUP%= tag | topic="%<nop>TOPIC%" |
+| topic  | a comma separated list of source topics; you can add a time zone to any source topic name by adding a ':' and a hour offset (-12 ... +12) or a time zone abbreviation, e.g: =topic="MySourceTopic:-2"=  %X% this time zone feature overrides the =timezone= attribute of a =%<nop>TTTOPICSETUP%= tag | topic="%<nop>TOPIC%" |
 | wholetimerow | enables/disables a whole-time event row (related attributes: wholetimerowtext, wholetimerowtitle) | wholetimerow="0" |
 | workingendtime | working hours end time | workingendtime="5:00pm" |
 | workingstarttime | working hours start time | workingstarttime="9:00am" |
 |  *Compatibility Mode: <br/>(%X% =compatmode="on"= is required %X%)*  |||
 | cmheaderformat | table header format of a day; a subset of strftime conversion specifiers is supported (only date not time specifiers; see manual page or Foswiki:Development.ConvergeDateTimeFormattingModels) | cmheaderformat="&lt;font&nbsp;title=\"%A - %d %b %Y\" size=\"-2\">%a&lt;br/&gt;%e&lt;/font&gt;" |
-| daynames | custom day names (a list separated by a '¦' and starting on Monday; overwrites lang attribute) | daynames="M¦T¦W¦T¦F¦S¦S" |
+| daynames | custom day names (a list separated by a '¦' and starting on Monday; overrides lang attribute) | daynames="M¦T¦W¦T¦F¦S¦S" |
 | forcestartdate | if set to 1 the timetable starts with the given startdate ('0' means: the timetable view starts with Monday') | forcestartdate="0" |
 | month | set a month (e.g. Jan, Feb ... or 01, 02, ... 12 ) or a month offset (e.g. +0, +1, -2,...) | month="+1" |
-| monthnames | custom month names (a list separated by '¦' and starting on January; overwrites lang attribute) | monthnames="J¦F¦M¦A¦M¦J¦J¦A¦S¦O¦N¦D" |
+| monthnames | custom month names (a list separated by '¦' and starting on January; overrides lang attribute) | monthnames="J¦F¦M¦A¦M¦J¦J¦A¦S¦O¦N¦D" |
 | navnext | navigation button to the next n days | navnext="&amp;gt;&amp;gt;" |
 | navnexttitle | title text (tooltip text) for the navigation button to the next n days | navnexttitle="Next %n day(s)" |
 | navprev | navigation button to the previous n days | navprev="&amp;lt;&amp;lt;" |
@@ -119,8 +119,8 @@ Example: %<nop>TIMETABLE{lang="Deutsch" timeinterval="15" }%
 | clicktooltiptext | tooltip text of table entries if =clicktooltip= is enabled | clicktooltiptext="Click me for more information" |
 | descrlimit | per line character limit for the description (%X% depends on the =textwrapper= attribute: if =textwrapper="plugin"= this limit is a character limit; if =textwrapper="browser"= the width of a event entry table cell is set to  =&lt;descrlimit&gt;em=) | descrlimit="10" | 
 | displaytime | display time in the event description of the timetable | displaytime="0" |
-| eventbgcolor | default background color of an event cell (you can overwrite this with an event entry) | eventbgcolor = "#AAAAAA" |
-| eventfgcolor | default text color of an event cell (you can overwrite this with an event entry) | eventfgcolor = "black" |
+| eventbgcolor | default background color of an event cell (you can override this with an event entry) | eventbgcolor = "#AAAAAA" |
+| eventfgcolor | default text color of an event cell (you can override this with an event entry) | eventfgcolor = "black" |
 | fontsize | default font size (see [[#TimeTablePluginKnownIssues][Known Issues and Bugs]]) | fontsize="xx-small" | 
 | headerformat | table header format of a day; a subset of strftime conversion specifiers is supported (only date not time specifiers; see manual page or Foswiki:Development.ConvergeDateTimeFormattingModels) | headerformat="&lt;font&nbsp;title=\"%A - %d %b %Y\" size=\"-2\">%a&lt;/font&gt;" |
 | monthheaderbgcolor | month header background color (default: tableheadercolor) | monthheaderbgcolor="%<nop>WEBBGCOLOR%" |
