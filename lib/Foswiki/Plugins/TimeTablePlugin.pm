@@ -1,8 +1,11 @@
 # Plugin for Foswiki - The Free and Open Source Wiki, http://foswiki.org/
 #
 # Copyright (C) 2000-2003 Andrea Sterbini, a.sterbini@flashnet.it
-# Copyright (C) 2001-2004 Peter Thoeny, peter@thoeny.com
-# Copyright (C) 2006-2008 Daniel Rohde
+# Copyright (C) 2001-2006 Peter Thoeny, peter@thoeny.org
+# Copyright (C) 2006-2009 Daniel Rohde
+# and Foswiki Contributors. All Rights Reserved. Foswiki Contributors
+# are listed in the AUTHORS file in the root of this distribution.
+# NOTE: Please extend that file, not this notice.
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -35,13 +38,12 @@ $VERSION = '$Rev: 8670$';
 # It is *not* used by the build automation tools, but is reported as part
 # of the version number in PLUGINDESCRIPTIONS.
 $RELEASE = 'Foswiki';
-
-$REVISION = '1.018'; # Kenneth Lavrsen: Foswiki version - no features added 
-#$REVISION = '1.017'; #dro# added hidettcm attribute requested by TWiki:Main.StevenCorfman
+ 
+$REVISION = '1.017'; #dro# added hidettcm attribute requested by TWiki:Main.StevenCorfman; fixed line breakes in rotated tables;
 #$REVISION = '1.016'; #dro# added overflow:auto style; fixed unknownparamsmsg bug;
 #$REVISION = '1.015'; #dro# fixed rotated table bugs (tooltips, showweekend="off")
 #$REVISION = '1.014'; #dro# added documentation requested by TWiki:Main.PeterThoeny; added rotated table feature requested by TWiki:Main.VickiBrown; fixed doc bug reported by TWiki:Main.JoeGainey 
-#$REVISION = '1.013'; #dro# fixed major time parsing bug reported by TWiki:Main.LarsEik; fixed major bug: events with a time range before start time should not be displayed; fixed major TTCM bug reported by Foswiki:Main.ArthurClemens; added URL parameter feature; added new attributes (tableborder, tablewidth, tablecell...); added browser based text wrapping feature requested by Foswiki:Main.ArthurClemens
+#$REVISION = '1.013'; #dro# fixed major time parsing bug reported by Foswiki:Main.LarsEik; fixed major bug: events with a time range before start time should not be displayed; fixed major TTCM bug reported by Foswiki:Main.ArthurClemens; added URL parameter feature; added new attributes (tableborder, tablewidth, tablecell...); added browser based text wrapping feature requested by Foswiki:Main.ArthurClemens
 #$REVISION = '1.012'; #dro# fixed readTopicText bug reported TWiki:Main.JoachimRahn; added month header feature (attributes: showmonthheader, monthheader...); added new tooltip feature (clicktooltip...)
 #$REVISION = '1.011'; #dro# added fontsize attribute; fixed HTML bug (validation);
 #$REVISION = '1.010'; #dro# added tablecolumnwidth and tabledatacellwidth attributes requested by TWiki:Main.VickiBrown;  added tooltip feature (tooltip... attributes);
@@ -184,7 +186,7 @@ sub DISABLE_initializeUserHandler {
    * =$wikiName= - users wiki name
    * =$loginName= - users login name
 
-Called when a new user registers with this Foswiki.
+Called when a new user registers with this %SYSTEMWEB%.
 
 __Since:__ Foswiki::Plugins::VERSION = '1.010'
 

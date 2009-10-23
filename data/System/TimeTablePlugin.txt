@@ -278,12 +278,11 @@ __Note:__ You do not need to install anything on the browser to use this plugin.
 ---++ Plugin Info
 
 |  Plugin Author: | Foswiki:Main.DanielRohde |
-|  Copyright: | &copy; 2006-2008, Foswiki:Main.DanielRohde |
+|  Copyright: | &copy; 2006, Foswiki:Main.DanielRohde |
 |  License: | GPL ([[http://www.gnu.org/copyleft/gpl.html][GNU General Public License]]) |
-|  Plugin Version: | V1.018 |
+|  Plugin Version: | V1.017 (23 Oct 2009) |
 |  Change History: | <!-- versions below in reverse order -->&nbsp; |
-|  V1.018 (16 Dec 2008) | Foswiki:Main.KennethLavrsen: Foswiki version |
-|  V1.017 (BETA) | Foswiki:Main.DanielRohde: added hidettcm attribute requested by TWiki:Main.StevenCorfman. Rebranded to Foswiki by Kenneth Lavrsen |
+|  V1.017 (23 Oct 2009) | Foswiki:Main.DanielRohde: added hidettcm attribute requested by TWiki:Main.StevenCorfman; fixed line breakes in rotated tables; |
 |  V1.016 (14 Nov 2008) | Foswiki:Main.DanielRohde: added overflow:auto style; fixed unknownparamsmsg bug; |
 |  V1.015 (29 Jul 2008) | Foswiki:Main.DanielRohde: fixed rotated table bugs (tooltips, showweekend="off") |
 |  V1.014 (10 Jul 2008) | Foswiki:Main.DanielRohde: added documentation requested by TWiki:Main.PeterThoeny; added rotated table feature requested by TWiki:Main.VickiBrown; fixed doc bug reported by TWiki:Main.JoeGainey |

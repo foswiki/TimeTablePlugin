@@ -1,8 +1,11 @@
 # Plugin for Foswiki - The Free and Open Source Wiki, http://foswiki.org/
 #
 # Copyright (C) 2000-2003 Andrea Sterbini, a.sterbini@flashnet.it
-# Copyright (C) 2001-2004 Peter Thoeny, peter@thoeny.com
-# Copyright (C) 2006-2008 Daniel Rohde
+# Copyright (C) 2001-2006 Peter Thoeny, peter@thoeny.org
+# Copyright (C) 2006-2009 Daniel ROhde
+# and Foswiki Contributors. All Rights Reserved. Foswiki Contributors
+# are listed in the AUTHORS file in the root of this distribution.
+# NOTE: Please extend that file, not this notice.
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -717,7 +720,7 @@ sub _renderRotatedTable {
 		}
 	}
 	foreach my $entry (sort keys %entryKeys) {
-		$text.=$cgi->Tr($cgi->th({-align=>'left', -valign=>'top', -rowspan=>$#{$conflictitems{$entry}} + 2 }, $entry).$entryRows{$entry});
+		$text.=$cgi->Tr($cgi->th({-align=>'left', -valign=>'top', -style=>'white-space:nowrap;text-wrap:none;', -rowspan=>$#{$conflictitems{$entry}} + 2 }, $entry).$entryRows{$entry});
 		for (my $i=0; $i<=$#{$conflictitems{$entry}}; $i++) {
 			$text.=$cgi->Tr($conflictitems{$entry}[$i]);
 		}
@@ -1456,7 +1459,7 @@ sub _processTopicSetup {
 	return $_[0];
 }
 
-### dro: following code is derived from Foswiki:Extentions.CalendarPlugin:
+### dro: following code is derived from Foswiki:Extensions.CalendarPlugin:
 # =========================
 sub _getTopicText() {
 
